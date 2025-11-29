@@ -1,54 +1,55 @@
 <?php
 
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+namespace App\Models;
 
-class TestCategory extends Eloquent
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class TestCategory extends Model
 {
-	/**
-	 * Enabling soft deletes for test categories.
-	 *
-	 */
-	use SoftDeletingTrait;
-	protected $dates = ['deleted_at'];
-    	
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'test_categories';
+    use HasFactory, SoftDeletes;
 
-	/**
-	 * Test types relationship
-	 *
-	 */
-	public function testTypes(){
-         return $this->hasMany('TestType', 'test_category_id');
-      }
+    protected $fillable = [
+        'name',
+        'code',
+        'description',
+        'sort_order',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
     /**
-	* Given the test category name we return the test category ID
-	*
-	* @param $testcategory - the name of the test category
-	*/
-	public static function getTestCatIdByName($testCategory)
-	{
-		try 
-		{
-			$testCatId = TestCategory::where('name', 'like', $testCategory)->firstOrFail();
-			return $testCatId->id;
-		} catch (ModelNotFoundException $e) 
-		{
-			Log::error("The test category ` $testCategory ` does not exist:  ". $e->getMessage());
-			//TODO: send email?
-			return null;
-		}
-	}
-	/**
-	 * critical values relationship
-	 *
-	 */
-	public function criticals()
-	{
-        return $this->hasMany('CritVal', 'test_category_id');
+     * Get all tests in this category
+     */
+    public function tests()
+    {
+        return $this->hasMany(Test::class)->orderBy('sort_order');
+    }
+
+    /**
+     * Get active tests only
+     */
+    public function activeTests()
+    {
+        return $this->hasMany(Test::class)->where('is_active', true)->orderBy('sort_order');
+    }
+
+    /**
+     * Get all test results for tests in this category
+     */
+    public function testResults()
+    {
+        return $this->hasManyThrough(
+            TestResult::class,
+            Test::class,
+            'test_category_id', // Foreign key on tests table
+            'test_id',          // Foreign key on test_results table
+            'id',               // Local key on test_categories table
+            'id'                // Local key on tests table
+        );
     }
 }

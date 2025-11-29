@@ -1,98 +1,55 @@
 <?php
 
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+namespace App\Models;
 
-class Patient extends Eloquent
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Patient extends Model
 {
-	const MALE = 0;
-	const FEMALE = 1;
-	const BOTH = 2;
-	const UNKNOWN = 3;
-	/**
-	 * Enabling soft deletes for patient details.
-	 *
-	 */
-	use SoftDeletingTrait;
-	protected $dates = ['deleted_at'];
-    	
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'patients';
+    use HasFactory, SoftDeletes;
 
-	/**
-	 * Visits relationship
-	 */
-    public function visits()
+    protected $fillable = [
+        'patient_id',
+        'name',
+        'date_of_birth',
+        'age',
+        'gender',
+        'phone',
+        'email',
+        'address',
+        'city',
+        'state',
+        'postal_code',
+        'country',
+        'doctor_name',
+        'doctor_referral',
+        'medical_history',
+        'allergies',
+        'notes',
+    ];
+
+    protected $casts = [
+        'date_of_birth' => 'date',
+    ];
+
+    /**
+     * Get all test results for this patient
+     */
+    public function testResults()
     {
-        return $this->hasMany('Visit');
+        return $this->hasMany(TestResult::class);
     }
 
-	/**
-	 * Patient Age 
-	 *
-	 * @param optional String - format [Y|YY|YYMM]
-	 * @param optional Timestamp - age as at this date
-	 * @return String x years y months
-	 */
-	public function getAge($format = "YYMM", $at = NULL)
-	{
-		if(!$at)$at = new DateTime('now');
-
-		$dateOfBirth = new DateTime($this->dob);
-		$interval = $dateOfBirth->diff($at);
-
-		$age = "";
-
-		switch ($format) {
-			case 'Y':
-				$age = $interval->y;break;
-			case 'M':
-				$age = $interval->m;break;
-			case 'D':
-				$age = $interval->d;break;
-			case 'YY':
-				$age = $interval->y ." years ";break;
-			default:
-				$age = ($interval->y > 0)?$interval->y ." years ":"";
-				$age .= ($interval->m > 0)?$interval->m ." months ":"";
-				$age .= ($interval->d > 0)?$interval->d." days":"";
-				break;
-		}
-
-		return $age;
-	}
-
-	/**
-	* Get patient's gender
-	*
-	* @param optional boolean $shortForm - return abbreviation (M/F). Default true
-	* @return String gender 
-	*/
-	public function getGender($shortForm=true)
-	{
-		if ($this->gender == Patient::MALE)
-		{
-			return $shortForm?"M":trans("messages.male");
-		}
-		else if ($this->gender == Patient::FEMALE)
-		{
-			return $shortForm?"F":trans("messages.female");
-		}
-	}
-
-	/**
-	* Search for patients meeting given criteria
-	*
-	* @param String $searchText
-	* @return Collection 
-	*/
-	public static function search($searchText)
-	{
-		return Patient::where('patient_number', '=', $searchText)
-						->orWhere('name', 'LIKE', '%'.$searchText.'%')
-						->orWhere('external_patient_number', '=', $searchText);
-	}
+    /**
+     * Generate unique patient ID
+     */
+    public static function generatePatientId(): string
+    {
+        $prefix = 'PAT';
+        $lastPatient = self::orderBy('id', 'desc')->first();
+        $number = $lastPatient ? ((int) substr($lastPatient->patient_id, 3)) + 1 : 1;
+        return $prefix . str_pad($number, 6, '0', STR_PAD_LEFT);
+    }
 }

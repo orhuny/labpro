@@ -1,0 +1,251 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        letter-spacing: -0.01em;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+}
+
+@layer components {
+    /* Professional Medical Color Scheme - Blue Theme */
+    .bg-primary {
+        background-color: #2563eb;
+    }
+    
+    .bg-primary-light {
+        background-color: #dbeafe;
+    }
+    
+    .bg-primary-lighter {
+        background-color: #eff6ff;
+    }
+    
+    .text-primary {
+        color: #2563eb;
+    }
+    
+    .text-primary-dark {
+        color: #1e40af;
+    }
+    
+    .border-primary {
+        border-color: #2563eb;
+    }
+    
+    /* Professional Form Inputs */
+    .form-input {
+        @apply w-full px-4 py-3 rounded-lg border-2 border-gray-200 bg-white text-gray-900 placeholder-gray-400 
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+               transition-all duration-200 shadow-sm text-sm;
+    }
+    
+    .form-input:focus {
+        @apply shadow-md border-blue-500;
+    }
+    
+    .form-select {
+        @apply w-full px-4 py-3 rounded-lg border-2 border-gray-200 bg-white text-gray-900 
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+               transition-all duration-200 shadow-sm text-sm;
+    }
+    
+    .form-textarea {
+        @apply w-full px-4 py-3 rounded-lg border-2 border-gray-200 bg-white text-gray-900 placeholder-gray-400 
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 
+               transition-all duration-200 shadow-sm text-sm;
+        resize: vertical;
+    }
+    
+    /* Professional Buttons */
+    .btn-primary {
+        @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg 
+               shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 
+               focus:ring-blue-500 focus:ring-offset-2 text-sm uppercase tracking-wide;
+    }
+    
+    .btn-secondary {
+        @apply bg-white hover:bg-gray-50 text-gray-700 font-semibold py-3 px-6 rounded-lg border-2 border-gray-300
+               shadow-sm hover:shadow-md transition-all duration-200 focus:outline-none focus:ring-2 
+               focus:ring-gray-400 focus:ring-offset-2 text-sm uppercase tracking-wide;
+    }
+    
+    .btn-success {
+        @apply bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg 
+               shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 
+               focus:ring-green-500 focus:ring-offset-2 text-sm uppercase tracking-wide;
+    }
+    
+    .btn-danger {
+        @apply bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg 
+               shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 
+               focus:ring-red-500 focus:ring-offset-2 text-sm uppercase tracking-wide;
+    }
+    
+    /* Professional Cards */
+    .card {
+        @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100;
+    }
+    
+    .card-header {
+        @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-5 border-b-2 border-blue-800;
+    }
+    
+    .card-body {
+        @apply p-8;
+    }
+    
+    /* Professional Tables */
+    .table-wrapper {
+        @apply overflow-x-auto rounded-lg shadow-sm border border-gray-200;
+    }
+    
+    .table {
+        @apply min-w-full divide-y divide-gray-200 bg-white;
+    }
+    
+    .table thead {
+        @apply bg-gradient-to-r from-blue-600 to-blue-700;
+    }
+    
+    .table th {
+        @apply px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider;
+    }
+    
+    .table td {
+        @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+    }
+    
+    .table tbody tr {
+        @apply hover:bg-blue-50 transition-colors duration-150 border-b border-gray-100;
+    }
+    
+    .table tbody tr:last-child {
+        @apply border-b-0;
+    }
+    
+    /* Professional Badges */
+    .badge {
+        @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide;
+    }
+    
+    .badge-success {
+        @apply bg-green-100 text-green-800 border border-green-300;
+    }
+    
+    .badge-warning {
+        @apply bg-yellow-100 text-yellow-800 border border-yellow-300;
+    }
+    
+    .badge-danger {
+        @apply bg-red-100 text-red-800 border border-red-300;
+    }
+    
+    .badge-info {
+        @apply bg-blue-100 text-blue-800 border border-blue-300;
+    }
+    
+    .badge-gray {
+        @apply bg-gray-100 text-gray-800 border border-gray-300;
+    }
+    
+    /* Section Title */
+    .section-title {
+        @apply text-2xl font-bold text-gray-900 mb-6 pb-3 border-b-2 border-blue-300 text-center;
+    }
+    
+    /* Form Group */
+    .form-group {
+        @apply mb-6;
+    }
+    
+    .form-label {
+        @apply block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide;
+    }
+    
+    /* Top Navigation */
+    .nav-top-link {
+        @apply text-gray-700 hover:text-blue-600 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 relative;
+    }
+    
+    .nav-top-link-active {
+        @apply text-blue-600 bg-blue-50 font-bold;
+    }
+    
+    .nav-top-link-active::after {
+        content: '';
+        @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-600 rounded-full;
+    }
+    
+    /* Stat Card */
+    .stat-card {
+        @apply bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition-all duration-300;
+    }
+    
+    /* Professional Header */
+    .page-header {
+        @apply bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 shadow-xl;
+    }
+    
+    /* Icon sizing - Force all SVGs to respect size constraints */
+    svg {
+        display: block;
+        flex-shrink: 0;
+    }
+    
+    /* Prevent icons from expanding beyond their specified size */
+    svg[class*="w-"], svg[class*="h-"] {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    
+    /* Global icon size constraints */
+    .alert svg,
+    .card-header svg,
+    .stat-card svg {
+        width: 20px !important;
+        height: 20px !important;
+        max-width: 20px !important;
+        max-height: 20px !important;
+        flex-shrink: 0;
+    }
+    
+    /* Patient Info Section */
+    .patient-info-section {
+        @apply bg-white rounded-xl shadow-md p-6 mb-6 border-l-4 border-blue-600;
+    }
+    
+    /* Top Navigation Bar */
+    .top-nav {
+        @apply bg-white shadow-md border-b border-gray-200;
+    }
+    
+    /* Content Container */
+    .content-container {
+        @apply max-w-full mx-auto px-6 py-6;
+    }
+    
+    /* Professional Alert */
+    .alert {
+        @apply p-4 rounded-lg border-l-4 shadow-md;
+    }
+    
+    .alert-success {
+        @apply bg-green-50 border-green-500 text-green-800;
+    }
+    
+    .alert-error {
+        @apply bg-red-50 border-red-500 text-red-800;
+    }
+    
+    .alert-warning {
+        @apply bg-yellow-50 border-yellow-500 text-yellow-800;
+    }
+}

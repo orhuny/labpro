@@ -1,91 +1,66 @@
-![image](https://travis-ci.org/ilabafrica/iBLIS.svg?branch=master)
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-BLIS
-=====
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
-BLIS is a port of the Basic Laboratory Information System ([BLIS](https://github.com/C4G/BLIS)) to the Laravel PHP Framework by [@iLabAfrica](http://www.ilabafrica.ac.ke/).
-BLIS was originally developed by C4G. 
+## About Laravel
 
-You can test and view the application [here](http://blis.ilabafrica.ac.ke:8080/).
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-Requirements (Linux)
-------------
-1. Supported database. Currently only [MySQL](http://dev.mysql.com/downloads/mysql) has been tested. Laravel also supports PostgreSQL, SQLite and SQL Server.
-2. [PHP >= 5.4](http://php.net).
-3. [Composer](https://getcomposer.org) - Dependency manager for PHP.
-4. [git](https://git-scm.com/) - Git is a free and open source distributed version control system
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Installation
------------
-##### DOCKER
-The easiest way to install is using docker, follow instruction [here](https://github.com/ilabafrica/iblis-contrib-docker) to install via docker. 
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-##### FROM SOURCE (Linux)
+## Learning Laravel
 
-1. Install the above mentioned requirements.
-2. Extract this git repository to a local folder by running the following shell command.
-    <blockquote>git clone git@github.com:APHLK/BLIS.git </blockquote>
-    This will create a folder called `BLIS`. Henceforth we'll refer to this folder as `<APP_HOME>`.
-3. Change your directory to `<APP_HOME>`. Update **composer** then run it in order to install the application dependencies. You may need root permissions to update `composer`. Run the following commands on the Linux terminal.
-    <blockquote>
-      composer self-update<br />
-      composer install
-    </blockquote>
-4. Update the application configuration files to suit your local settings:
-  - Set the "Application URL" in `<APP_HOME>/app/config/app.php`
-  - Create a database and set the database connection details in `<APP_HOME>/app/config/database.php`
-  - The organization name in `<APP_HOME>/app/config/kblis.php`
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-5. Run the migrations to create the required database tables.
-    <blockquote>php artisan migrate</blockquote>
-6. Load the basic seed data
-    <blockquote> php artisan db:seed </blockquote>
-   If #5 or #6 above fails, you may need to run the following command then repeat the above two commands again.
-    <blockquote> composer dumpautoload </blockquote>
-7. If you are running the application on a webserver eg. apache, ensure that the webserver has write permissions to the `<APP_HOME>/app/storage` folder.
-   The web-root should be the `<APP_HOME>/public` folder.
+You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-   See below a sample apache (v 2.4.25 on Ubuntu) *namedhost* virtualhost configuration file.
-   ````
-   <VirtualHost *:80>
-        ServerName blis
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-        ServerAdmin blisadmin@myorganization.me
-        DocumentRoot /var/www/BLIS/public
+## Laravel Sponsors
 
-        <Directory /var/www/BLIS/public>
-                Options Indexes MultiViews FollowSymLinks
-                AllowOverride All
-                Require all granted
-        </Directory>
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+### Premium Partners
 
-    </VirtualHost>
-    ````
-   
- 8. The default login credentials are '*administrator*' '*password*'.
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[WebReinvent](https://webreinvent.com/)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
+- **[Jump24](https://jump24.co.uk)**
+- **[Redberry](https://redberry.international/laravel/)**
+- **[Active Logic](https://activelogic.com)**
+- **[byte5](https://byte5.de)**
+- **[OP.GG](https://op.gg)**
 
-Troubleshooting
-----------------
-1. Routing failures: Ensure that you enable mod_rewrite, `sudo a2enmod rewrite` if you are using apache. Perform the analogous action if using another web server.
+## Contributing
 
-Road Map
----------
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-#|Feature|Release Date
--|-|-
-1.| Create a core API availing all functionality| September 2018
-2.| HTML/CSC/Javascript front end | September 2018
-3.| Use [Mirth](https://www.mirth.com/) for instrument interfaces | September 2018
-4.| Update documentation| Continuous
+## Code of Conduct
 
-Collaboration
---------------
-We **welcome** all forms of collaboration: coding, testing, documentation (writing/proof reading), feature/enhancement suggestions, ... Please review our contribution guidelines on the [wiki page](https://github.com/APHLK/BLIS/wiki).
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-1. Review the [issue list](https://github.com/APHLK/BLIS/issues) for an issue you wish to resolve or create a new issue for a bug or enhancement.
-2. Create a branch
-3. Resolve the issue
-4. Send us a pull request
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
