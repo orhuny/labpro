@@ -222,7 +222,14 @@
             </span>
         </div>
         
-        @if($testResultItem->values->count() > 0)
+        @php
+            // Sadece değeri girilmiş olan sonuçları PDF'te göster
+            $displayValues = $testResultItem->values->filter(function ($v) {
+                return $v->value !== null && $v->value !== '';
+            });
+        @endphp
+
+        @if($displayValues->count() > 0)
         <table>
             <thead>
                 <tr>
@@ -234,7 +241,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($testResultItem->values as $value)
+                @foreach($displayValues as $value)
                 @php
                     $parameter = $value->parameter;
                     $range = $parameter->getNormalRange($firstResult->patient->gender);

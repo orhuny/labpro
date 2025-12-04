@@ -153,7 +153,13 @@
     <div class="card">
         <div class="card-body max-w-5xl mx-auto">
             <h3 class="section-title text-center">{{ __('common.test_results') }}</h3>
-                @if($testResult->values->count() > 0)
+                @php
+                    // Sadece değeri girilmiş olan sonuçları göster
+                    $displayValues = $testResult->values->filter(function ($v) {
+                        return $v->value !== null && $v->value !== '';
+                    });
+                @endphp
+                @if($displayValues->count() > 0)
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -166,7 +172,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach($testResult->values as $value)
+                            @foreach($displayValues as $value)
                             @php
                                 $parameter = $value->parameter;
                                 $range = $parameter->getNormalRange($testResult->patient->gender);

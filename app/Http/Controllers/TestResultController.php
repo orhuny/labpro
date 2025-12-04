@@ -199,15 +199,39 @@ class TestResultController extends Controller
             'values.*.notes' => 'nullable|string',
         ]);
 
+        // Determine if any test result value has been entered
+        $hasEnteredValues = false;
+        if (isset($validated['values']) && is_array($validated['values'])) {
+            foreach ($validated['values'] as $valueData) {
+                if (array_key_exists('value', $valueData) && $valueData['value'] !== null && $valueData['value'] !== '') {
+                    $hasEnteredValues = true;
+                    break;
+                }
+            }
+        }
+
+        // Decide final status:
+        // - If any value is entered, automatically mark as completed
+        // - Otherwise, use the status from the form
+        $finalStatus = $validated['status'];
+        if ($hasEnteredValues) {
+            $finalStatus = 'completed';
+
+            // If no result date is provided, default to today when marking as completed
+            if (empty($validated['result_date'])) {
+                $validated['result_date'] = now()->toDateString();
+            }
+        }
+
         // Update basic fields
         $testResult->update([
             'sample_collection_date' => $validated['sample_collection_date'] ?? $testResult->sample_collection_date,
             'result_date' => $validated['result_date'] ?? $testResult->result_date,
-            'status' => $validated['status'],
+            'status' => $finalStatus,
             'notes' => $validated['notes'] ?? $testResult->notes,
             'doctor_remarks' => $validated['doctor_remarks'] ?? $testResult->doctor_remarks,
             'technician_notes' => $validated['technician_notes'] ?? $testResult->technician_notes,
-            'performed_by' => ($validated['status'] === 'completed' || $validated['status'] === 'in_progress') 
+            'performed_by' => ($finalStatus === 'completed' || $finalStatus === 'in_progress') 
                 ? auth()->id() 
                 : $testResult->performed_by,
         ]);
