@@ -127,7 +127,7 @@
     <div class="header">
         <table class="header-table">
             <tr>
-                <td class="header-logo-cell" style="width: 100px; vertical-align: top; padding-right: 20px; padding-top: 0;">
+                <td class="header-logo-cell" style="width: 100px; vertical-align: middle; padding-right: 20px; padding-top: 5px;">
                     @if(isset($logoBase64) && $logoBase64)
                         <img src="{{ $logoBase64 }}" alt="YAMAN LAB Logo" style="width: 100px; height: auto; max-height: 100px; display: block; margin: 0;" />
                     @else
@@ -140,16 +140,19 @@
                         </table>
                     @endif
                 </td>
-                <td class="header-content-cell">
+                <td class="header-content-cell" style="vertical-align: middle;">
                     <table style="width: 100%;">
                         <tr>
-                            <td style="vertical-align: top;">
+                            <td style="vertical-align: middle;">
                                 <h1>YAMAN LAB</h1>
                             </td>
                             <td style="text-align: right; vertical-align: top; padding-left: 15px;">
                                 <div class="header-date">
-                                    {{ __('common.date') }}: {{ now()->format('d.m.Y') }}<br>
-                                    {{ __('common.time') }}: {{ now()->format('H:i') }}
+                                    @php
+                                        $athensTime = now()->setTimezone('Europe/Athens');
+                                    @endphp
+                                    {{ __('common.date') }}: {{ $athensTime->format('d.m.Y') }}<br>
+                                    {{ __('common.time') }}: {{ $athensTime->format('H:i') }}
                                 </div>
                             </td>
                         </tr>

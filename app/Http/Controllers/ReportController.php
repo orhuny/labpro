@@ -48,8 +48,8 @@ class ReportController extends Controller
         $logoBase64 = null;
         $logoPathForView = null;
         
-        // Try different logo filenames
-        $possibleLogos = ['yamanlab.png', 'logo.png'];
+        // Try different logo filenames (logo.png has priority)
+        $possibleLogos = ['logo.png', 'yamanlab.png'];
         foreach ($possibleLogos as $logoFile) {
             $logoPath = public_path('images/' . $logoFile);
             if (file_exists($logoPath)) {
@@ -129,8 +129,8 @@ class ReportController extends Controller
         $logoBase64 = null;
         $logoPathForView = null;
         
-        // Try different logo filenames
-        $possibleLogos = ['yamanlab.png', 'logo.png'];
+        // Try different logo filenames (logo.png has priority)
+        $possibleLogos = ['logo.png', 'yamanlab.png'];
         foreach ($possibleLogos as $logoFile) {
             $logoPath = public_path('images/' . $logoFile);
             if (file_exists($logoPath)) {

@@ -164,7 +164,7 @@ return [
     // Test Result Details
     'patient_information' => 'Hasta Bilgileri',
     'test_information' => 'Test Bilgileri',
-    'sample_collection_date' => 'Örnek Toplama Tarihi',
+    'sample_collection_date' => 'Numune Alma Tarihi',
     'result_date' => 'Sonuç Tarihi',
     'ordered_by' => 'Sipariş Eden',
     'performed_by' => 'Uygulayan',
