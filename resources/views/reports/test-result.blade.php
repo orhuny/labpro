@@ -258,8 +258,8 @@
                             <div style="font-size: 10px; line-height: 1.4;">
                                 @foreach($parameter->reference_ranges as $refRange)
                                     <div style="margin-bottom: 2px;">
-                                        <strong>{{ $refRange['label'] ?? '' }}:</strong>
                                         @php
+                                            $label = $refRange['label'] ?? '';
                                             $refValue = $refRange['value'] ?? null;
                                             $min = $refRange['min'] ?? null;
                                             $max = $refRange['max'] ?? null;
@@ -314,7 +314,13 @@
                                             elseif ($hasValue) {
                                                 $displayValue = $refValue;
                                             }
+                                            
+                                            // Add colon only if label exists and displayValue exists
+                                            $showColon = !empty($label) && !empty($displayValue);
                                         @endphp
+                                        @if(!empty($label))
+                                            <strong>{{ $label }}@if($showColon):@endif</strong>
+                                        @endif
                                         @if($displayValue)
                                             {{ $displayValue }}
                                         @endif
