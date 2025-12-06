@@ -252,7 +252,7 @@
                 <tr>
                     <td>{{ $parameter->name }}</td>
                     <td><strong>{{ $value->value ?? __('common.n_a') }}</strong></td>
-                    <td>{{ $parameter->unit ?? __('common.n_a') }}</td>
+                    <td>{{ $parameter->unit ?? '-' }}</td>
                     <td>
                         @if($parameter->reference_ranges && count($parameter->reference_ranges) > 0)
                             <div style="font-size: 10px; line-height: 1.4;">
@@ -322,12 +322,12 @@
                                 @endforeach
                             </div>
                         @elseif($range['min'] !== null || $range['max'] !== null)
-                            {{ $range['min'] ?? 'N/A' }} - {{ $range['max'] ?? 'N/A' }}
+                            {{ $range['min'] ?? '-' }} - {{ $range['max'] ?? '-' }}
                             @if($parameter->unit)
                                 {{ $parameter->unit }}
                             @endif
                         @else
-                            {{ __('common.n_a') }}
+                            -
                         @endif
                     </td>
                     <td>
