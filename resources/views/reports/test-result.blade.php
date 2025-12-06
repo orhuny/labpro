@@ -315,7 +315,8 @@
                                                 $displayValue = $refValue;
                                             }
                                             
-                                            // Add colon only if label exists and displayValue exists
+                                            // Add colon only if both label and displayValue exist
+                                            // If only label exists (no min/max/value), do not show colon
                                             $showColon = !empty($label) && !empty($displayValue);
                                         @endphp
                                         @if(!empty($label))
