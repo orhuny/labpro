@@ -243,7 +243,15 @@ class TestResultController extends Controller
                 if (!$parameter) continue;
 
                 $value = $valueData['value'] ?? null;
+                
+                // Check if user manually set the flag
                 $isOutsideNormalRange = isset($valueData['is_outside_normal_range']) && $valueData['is_outside_normal_range'] == '1';
+                
+                // If value is provided and flag is not manually set, check automatically based on reference ranges
+                if (!empty($value) && !$isOutsideNormalRange) {
+                    $patientGender = $testResult->patient->gender ?? null;
+                    $isOutsideNormalRange = $parameter->isValueOutsideNormalRange($value, $patientGender);
+                }
 
                 TestResultValue::updateOrCreate(
                     [

@@ -107,4 +107,74 @@ class TestParameter extends Model
 
         return 'normal';
     }
+
+    /**
+     * Check if a value is outside normal range based on reference_ranges
+     * Returns true if value is outside normal range, false otherwise
+     * 
+     * @param mixed $value The value to check
+     * @param string|null $gender Patient gender for gender-specific ranges
+     * @return bool True if outside normal range, false if within normal range
+     */
+    public function isValueOutsideNormalRange($value, ?string $gender = null): bool
+    {
+        // If value is empty or not numeric, cannot determine
+        if (empty($value) || !is_numeric($value)) {
+            return false;
+        }
+
+        if (!$this->reference_ranges || count($this->reference_ranges) === 0) {
+            return false;
+        }
+
+        $numValue = (float) $value;
+        $applicableRange = null;
+
+        // Try to find a range matching the gender
+        if ($gender) {
+            $genderLabels = [
+                'male' => ['erkek', 'male', 'er', 'm'],
+                'female' => ['kadın', 'female', 'kad', 'f', 'folikuler', 'siklus', 'luteal', 'postmenopoz', 'menopoz'],
+            ];
+
+            $searchLabels = $genderLabels[strtolower($gender)] ?? [];
+            
+            foreach ($this->reference_ranges as $range) {
+                $label = strtolower($range['label'] ?? '');
+                foreach ($searchLabels as $searchLabel) {
+                    if (stripos($label, $searchLabel) !== false) {
+                        $applicableRange = $range;
+                        break 2;
+                    }
+                }
+            }
+        }
+
+        // If no gender match, use the first range
+        if (!$applicableRange) {
+            $applicableRange = $this->reference_ranges[0];
+        }
+
+        $min = $applicableRange['min'] ?? null;
+        $max = $applicableRange['max'] ?? null;
+
+        // If both min and max are null, cannot determine
+        if ($min === null && $max === null) {
+            return false;
+        }
+
+        // Check if value is outside the range
+        // If min exists: value must be >= min
+        if ($min !== null && $min !== '' && $numValue < (float)$min) {
+            return true;
+        }
+
+        // If max exists: value must be <= max
+        if ($max !== null && $max !== '' && $numValue > (float)$max) {
+            return true;
+        }
+
+        // Value is within normal range
+        return false;
+    }
 }
