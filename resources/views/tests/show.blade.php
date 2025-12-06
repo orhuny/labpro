@@ -107,8 +107,8 @@
                                         <div class="space-y-1">
                                             @foreach($parameter->reference_ranges as $refRange)
                                                 <div class="text-xs">
-                                                    <span class="font-medium">{{ $refRange['label'] ?? '' }}:</span>
                                                     @php
+                                                        $label = $refRange['label'] ?? '';
                                                         $refValue = $refRange['value'] ?? null;
                                                         $min = $refRange['min'] ?? null;
                                                         $max = $refRange['max'] ?? null;
@@ -157,7 +157,14 @@
                                                         } else {
                                                             $displayValue = '';
                                                         }
+                                                        
+                                                        // Add colon only if both label and displayValue exist
+                                                        // If only label exists (no min/max/value), do not show colon
+                                                        $showColon = !empty($label) && !empty($displayValue);
                                                     @endphp
+                                                    @if(!empty($label))
+                                                        <span class="font-medium">{{ $label }}@if($showColon):@endif</span>
+                                                    @endif
                                                     @if($displayValue)
                                                         {{ $displayValue }}
                                                     @endif
