@@ -21,7 +21,11 @@ class ReportController extends Controller
                 'orderedBy',
                 'performedBy'
             ])
-            ->orderBy('test_id')
+            ->join('tests', 'test_results.test_id', '=', 'tests.id')
+            ->join('test_categories', 'tests.test_category_id', '=', 'test_categories.id')
+            ->orderBy('test_categories.sort_order')
+            ->orderBy('tests.sort_order')
+            ->select('test_results.*')
             ->get();
 
         // If no group, just use the single test result
@@ -102,7 +106,11 @@ class ReportController extends Controller
                 'orderedBy',
                 'performedBy'
             ])
-            ->orderBy('test_id')
+            ->join('tests', 'test_results.test_id', '=', 'tests.id')
+            ->join('test_categories', 'tests.test_category_id', '=', 'test_categories.id')
+            ->orderBy('test_categories.sort_order')
+            ->orderBy('tests.sort_order')
+            ->select('test_results.*')
             ->get();
 
         // If no group, just use the single test result
