@@ -109,8 +109,8 @@
                         @foreach($recentResults as $result)
                         <tr>
                             <td class="font-semibold">{{ $result->result_id }}</td>
-                            <td>{{ $result->patient->name }}</td>
-                            <td>{{ $result->test->name }}</td>
+                            <td>{{ optional($result->patient)->name ?? '-' }}</td>
+                            <td>{{ optional($result->test)->name ?? '-' }}</td>
                             <td>
                                 @if($result->status == 'completed')
                                     <span class="badge badge-success">{{ __('common.completed') }}</span>
