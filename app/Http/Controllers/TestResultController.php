@@ -67,6 +67,14 @@ class TestResultController extends Controller
             'notes' => 'nullable|string',
         ]);
 
+        // Double check: Ensure patient exists and is not deleted
+        $patient = Patient::find($validated['patient_id']);
+        if (!$patient) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', __('common.patient_not_found'));
+        }
+
         $createdResults = [];
         $errors = [];
         

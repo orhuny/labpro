@@ -12,7 +12,7 @@
     <div class="card">
         <div class="card-body max-w-3xl mx-auto">
 
-                <form action="{{ route('test-results.store') }}" method="POST">
+                <form action="{{ route('test-results.store') }}" method="POST" id="test-result-form">
                     @csrf
 
                     <div class="space-y-6">
@@ -112,8 +112,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     const patientSearch = document.getElementById('patient_search');
     const patientSelect = document.getElementById('patient_id');
+    const form = document.getElementById('test-result-form');
     const allOptions = Array.from(patientSelect.options).slice(1); // İlk option'ı (placeholder) hariç tut
     
+    // Patient search functionality
     patientSearch.addEventListener('input', function() {
         const searchTerm = this.value.toLowerCase().trim();
         
@@ -138,6 +140,25 @@ document.addEventListener('DOMContentLoaded', function() {
                     option.style.display = 'none';
                 }
             });
+        }
+    });
+    
+    // Form validation: Prevent submission if patient is not selected
+    form.addEventListener('submit', function(e) {
+        const patientId = patientSelect.value;
+        if (!patientId || patientId === '') {
+            e.preventDefault();
+            alert('{{ __('common.please_select_patient') }}');
+            patientSelect.focus();
+            return false;
+        }
+        
+        // Also check if at least one test is selected
+        const testCheckboxes = document.querySelectorAll('input[name="test_ids[]"]:checked');
+        if (testCheckboxes.length === 0) {
+            e.preventDefault();
+            alert('{{ __('common.please_select_at_least_one_test') }}');
+            return false;
         }
     });
 });
