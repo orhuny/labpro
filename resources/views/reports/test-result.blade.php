@@ -219,7 +219,7 @@
     @foreach($testResults as $testResultItem)
     <div class="section" style="page-break-inside: avoid;">
         <div class="section-title" style="background-color: #e0e7ff; border-left-color: #4f46e5;">
-            {{ $testResultItem->test->category->name }} - {{ $testResultItem->test->name }}
+            {{ optional($testResultItem->test->category)->name ?? '-' }} - {{ optional($testResultItem->test)->name ?? '-' }}
             <span style="font-size: 10px; font-weight: normal; color: #666; margin-left: 10px;">
                 ({{ __('common.result_id') }}: {{ $testResultItem->result_id }})
             </span>
