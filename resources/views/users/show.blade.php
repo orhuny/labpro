@@ -111,9 +111,13 @@
                         <tr>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $result->result_id }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                <a href="{{ route('patients.show', $result->patient) }}" class="text-blue-600 hover:text-blue-900">
-                                    {{ $result->patient->name }}
-                                </a>
+                                @if($result->patient)
+                                    <a href="{{ route('patients.show', $result->patient) }}" class="text-blue-600 hover:text-blue-900">
+                                        {{ $result->patient->name }}
+                                    </a>
+                                @else
+                                    <span class="text-gray-500">-</span>
+                                @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $result->test->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">

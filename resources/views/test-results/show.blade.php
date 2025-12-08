@@ -42,9 +42,13 @@
                             <div>
                                 <dt class="text-sm font-medium text-gray-500">{{ __('common.name') }}</dt>
                                 <dd class="text-sm text-gray-900">
-                                    <a href="{{ route('patients.show', $testResult->patient) }}" class="text-blue-600 hover:text-blue-900">
-                                        {{ $testResult->patient->name }}
-                                    </a>
+                                    @if($testResult->patient)
+                                        <a href="{{ route('patients.show', $testResult->patient) }}" class="text-blue-600 hover:text-blue-900">
+                                            {{ $testResult->patient->name }}
+                                        </a>
+                                    @else
+                                        <span class="text-gray-500">-</span>
+                                    @endif
                                 </dd>
                             </div>
                             <div>

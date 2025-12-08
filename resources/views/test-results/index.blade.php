@@ -85,9 +85,13 @@
                                             </div>
                                             <div class="flex items-center gap-2 min-w-0">
                                                 <span class="text-xs text-gray-500 whitespace-nowrap">{{ __('common.patient') }}:</span>
-                                                <a href="{{ route('patients.show', $firstResult->patient) }}" class="text-blue-600 hover:text-blue-900 font-medium">
-                                                    {{ $firstResult->patient->name }}
-                                                </a>
+                                                @if($firstResult->patient)
+                                                    <a href="{{ route('patients.show', $firstResult->patient) }}" class="text-blue-600 hover:text-blue-900 font-medium">
+                                                        {{ $firstResult->patient->name }}
+                                                    </a>
+                                                @else
+                                                    <span class="text-gray-500 font-medium">-</span>
+                                                @endif
                                             </div>
                                             <div class="flex items-center gap-2 min-w-0">
                                                 <span class="text-xs text-gray-500 whitespace-nowrap">{{ __('common.test') }}:</span>
@@ -95,7 +99,7 @@
                                                     @if($isGroup)
                                                         {{ __('common.multiple_tests') }}
                                                     @else
-                                                        {{ $firstResult->test->name }}
+                                                        {{ optional($firstResult->test)->name ?? '-' }}
                                                     @endif
                                                 </span>
                                             </div>
@@ -103,9 +107,9 @@
                                                 <span class="text-xs text-gray-500 whitespace-nowrap">{{ __('common.category') }}:</span>
                                                 <span class="text-gray-500">
                                                     @if($isGroup)
-                                                        {{ $groupResults->pluck('test.category.name')->unique()->join(', ') }}
+                                                        {{ $groupResults->filter(function($r) { return $r->test && $r->test->category; })->pluck('test.category.name')->unique()->join(', ') ?: '-' }}
                                                     @else
-                                                        {{ $firstResult->test->category->name }}
+                                                        {{ optional($firstResult->test->category)->name ?? '-' }}
                                                     @endif
                                                 </span>
                                             </div>
@@ -182,8 +186,8 @@
                                             @foreach($groupResults as $result)
                                             <tr class="hover:bg-gray-50">
                                                 <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{{ $result->result_id }}</td>
-                                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ $result->test->name }}</td>
-                                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ $result->test->category->name }}</td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ optional($result->test)->name ?? '-' }}</td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ optional($result->test->category)->name ?? '-' }}</td>
                                                 <td class="px-4 py-3 whitespace-nowrap">
                                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                                         @if($result->status === 'completed') bg-green-100 text-green-800
