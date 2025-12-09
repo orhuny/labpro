@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 
 class Patient extends Model
@@ -49,8 +50,37 @@ class Patient extends Model
     public static function generatePatientId(): string
     {
         $prefix = 'PAT';
-        $lastPatient = self::orderBy('id', 'desc')->first();
-        $number = $lastPatient ? ((int) substr($lastPatient->patient_id, 3)) + 1 : 1;
-        return $prefix . str_pad($number, 6, '0', STR_PAD_LEFT);
+
+        return DB::transaction(function () use ($prefix) {
+            // Lock the table to prevent race conditions
+            $last = DB::table('patients')
+                ->select('patient_id')
+                ->where('patient_id', 'like', $prefix . '%')
+                ->orderByDesc('id')
+                ->lockForUpdate()
+                ->first();
+
+            $lastNumber = 0;
+            if ($last && isset($last->patient_id)) {
+                $lastNumber = (int) substr($last->patient_id, strlen($prefix));
+            }
+
+            // Increment and format
+            $nextNumber = $lastNumber + 1;
+            $nextId = $prefix . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+
+            // Ensure unique (unlikely needed with lock, but double-check)
+            $attempts = 0;
+            while (self::where('patient_id', $nextId)->exists()) {
+                $attempts++;
+                $nextNumber++;
+                $nextId = $prefix . str_pad($nextNumber, 6, '0', STR_PAD_LEFT);
+                if ($attempts > 5) {
+                    throw new \RuntimeException('Unable to generate unique patient_id');
+                }
+            }
+
+            return $nextId;
+        });
     }
 }
