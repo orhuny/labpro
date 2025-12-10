@@ -89,6 +89,19 @@
             margin-bottom: 10px;
             border-left: 4px solid #2563eb;
         }
+        /* PDF pagination helpers */
+        .test-section {
+            page-break-inside: auto;
+        }
+        .test-table thead {
+            display: table-header-group;
+        }
+        .test-table tbody {
+            display: table-row-group;
+        }
+        .test-table tr {
+            page-break-inside: avoid;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -217,7 +230,7 @@
     </div>
 
     @foreach($testResults as $testResultItem)
-    <div class="section" style="page-break-inside: avoid;">
+    <div class="section test-section">
         <div class="section-title" style="background-color: #e0e7ff; border-left-color: #4f46e5;">
             {{ optional($testResultItem->test->category)->name ?? '-' }} - {{ optional($testResultItem->test)->name ?? '-' }}
             <span style="font-size: 10px; font-weight: normal; color: #666; margin-left: 10px;">
@@ -238,7 +251,7 @@
         @endphp
 
         @if($displayValues->count() > 0)
-        <table>
+        <table class="test-table">
             <thead>
                 <tr>
                     <th>{{ __('common.parameter_name') }}</th>
