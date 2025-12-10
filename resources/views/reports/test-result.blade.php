@@ -226,10 +226,15 @@
         </div>
         
         @php
-            // Sadece değeri girilmiş olan sonuçları PDF'te göster
-            $displayValues = $testResultItem->values->filter(function ($v) {
-                return $v->value !== null && $v->value !== '';
-            });
+            // Sadece değeri girilmiş olan sonuçları PDF'te göster ve parametre sırasına göre sırala
+            $displayValues = $testResultItem->values
+                ->filter(function ($v) {
+                    return $v->value !== null && $v->value !== '';
+                })
+                ->sortBy(function ($v) {
+                    return $v->parameter ? $v->parameter->sort_order : 999;
+                })
+                ->values();
         @endphp
 
         @if($displayValues->count() > 0)
