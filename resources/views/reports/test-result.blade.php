@@ -195,22 +195,22 @@
 
     <div class="section">
         <div class="section-title">{{ __('common.patient_information') }}</div>
-        <table>
+        <table style="width:100%; border-collapse:collapse; font-size:11px; line-height:1.3;">
             <tr>
-                <th width="30%">{{ __('common.patient_id') }}</th>
-                <td>{{ $firstResult->patient->patient_id }}</td>
+                <th width="30%" style="padding:4px 6px; background:#f9fafb; text-align:left; border-bottom:1px solid #e5e7eb;">{{ __('common.patient_id') }}</th>
+                <td style="padding:4px 6px; border-bottom:1px solid #e5e7eb;">{{ $firstResult->patient->patient_id }}</td>
             </tr>
             <tr>
-                <th>{{ __('common.name') }}</th>
-                <td>{{ $firstResult->patient->name }}</td>
+                <th style="padding:4px 6px; background:#f9fafb; text-align:left; border-bottom:1px solid #e5e7eb;">{{ __('common.name') }}</th>
+                <td style="padding:4px 6px; border-bottom:1px solid #e5e7eb;">{{ $firstResult->patient->name }}</td>
             </tr>
             <tr>
-                <th>{{ __('common.age') }}</th>
-                <td>{{ $firstResult->patient->age ?? __('common.n_a') }}</td>
+                <th style="padding:4px 6px; background:#f9fafb; text-align:left; border-bottom:1px solid #e5e7eb;">{{ __('common.age') }}</th>
+                <td style="padding:4px 6px; border-bottom:1px solid #e5e7eb;">{{ $firstResult->patient->age ?? __('common.n_a') }}</td>
             </tr>
             <tr>
-                <th>{{ __('common.gender') }}</th>
-                <td>
+                <th style="padding:4px 6px; background:#f9fafb; text-align:left; border-bottom:1px solid #e5e7eb;">{{ __('common.gender') }}</th>
+                <td style="padding:4px 6px; border-bottom:1px solid #e5e7eb;">
                     @if($firstResult->patient->gender === 'male')
                         {{ __('common.male') }}
                     @elseif($firstResult->patient->gender === 'female')
@@ -222,8 +222,8 @@
             </tr>
             @if($firstResult->sample_collection_date)
             <tr>
-                <th>{{ __('common.sample_collection_date') }}</th>
-                <td>{{ $firstResult->sample_collection_date->format('d') }} {{ $monthNames[$firstResult->sample_collection_date->format('n') - 1] }} {{ $firstResult->sample_collection_date->format('Y') }}</td>
+                <th style="padding:4px 6px; background:#f9fafb; text-align:left; border-bottom:1px solid #e5e7eb;">{{ __('common.sample_collection_date') }}</th>
+                <td style="padding:4px 6px; border-bottom:1px solid #e5e7eb;">{{ $firstResult->sample_collection_date->format('d') }} {{ $monthNames[$firstResult->sample_collection_date->format('n') - 1] }} {{ $firstResult->sample_collection_date->format('Y') }}</td>
             </tr>
             @endif
         </table>
