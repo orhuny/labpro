@@ -61,6 +61,13 @@
                     </button>
                 </div>
                 
+                <!-- Rich HTML Reference (optional) -->
+                <div class="mt-6 border border-dashed border-gray-200 rounded-lg p-4 bg-gray-50">
+                    <h4 class="text-md font-semibold text-gray-700 mb-2">Referans HTML (opsiyonel)</h4>
+                    <p class="text-xs text-gray-500 mb-2">Word/Excel tablosunu veya biçimli metni buraya yapıştırabilirsiniz. PDF'te referans aralığı sütununda aynen gösterilir.</p>
+                    <textarea name="reference_html" id="reference_html" rows="4" class="form-textarea" placeholder="<table>...</table>"></textarea>
+                </div>
+                
                 <div class="mt-4">
                     <label class="inline-flex items-center">
                         <input type="checkbox" name="is_active" value="1" checked class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -276,6 +283,13 @@
                                         <button type="button" onclick="addEditReferenceRange({{ $parameter->id }})" class="mt-3 text-sm text-blue-600 hover:text-blue-800 font-semibold">
                                             + {{ __('common.add_reference_range') }}
                                         </button>
+                                    </div>
+                                    
+                                    <!-- Rich HTML Reference (optional) -->
+                                    <div class="mt-6 border border-dashed border-gray-200 rounded-lg p-4 bg-gray-50">
+                                        <h4 class="text-md font-semibold text-gray-700 mb-2">Referans HTML (opsiyonel)</h4>
+                                        <p class="text-xs text-gray-500 mb-2">Word/Excel tablosunu veya biçimli metni buraya yapıştırabilirsiniz. PDF'te referans aralığı sütununda aynen gösterilir.</p>
+                                        <textarea name="reference_html" id="edit_reference_html_{{ $parameter->id }}" rows="4" class="form-textarea" placeholder="<table>...">{{ old('reference_html', $parameter->reference_html) }}</textarea>
                                     </div>
                                     
                                     <div class="mt-4">

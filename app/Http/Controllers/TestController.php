@@ -155,6 +155,7 @@ class TestController extends Controller
             'value_type' => 'required|in:numeric,text,boolean,calculated',
             'calculation_formula' => 'nullable|string',
             'reference_ranges' => 'nullable|array',
+            'reference_html' => 'nullable|string',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
         ];
@@ -226,6 +227,7 @@ class TestController extends Controller
             'value_type' => 'required|in:numeric,text,boolean,calculated',
             'calculation_formula' => 'nullable|string',
             'reference_ranges' => 'nullable|array',
+            'reference_html' => 'nullable|string',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
         ];

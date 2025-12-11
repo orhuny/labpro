@@ -18,6 +18,7 @@ class TestParameter extends Model
         'value_type',
         'calculation_formula',
         'reference_ranges',
+        'reference_html',
         'sort_order',
         'is_active',
     ];

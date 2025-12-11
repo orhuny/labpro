@@ -272,7 +272,11 @@
                     <td><strong>{{ $value->value ?? __('common.n_a') }}</strong></td>
                     <td>{{ $parameter->unit ?? __('common.n_a') }}</td>
                     <td>
-                        @if($parameter->reference_ranges && count($parameter->reference_ranges) > 0)
+                        @if(!empty($parameter->reference_html))
+                            <div style="font-size: 10px; line-height: 1.4;">
+                                {!! $parameter->reference_html !!}
+                            </div>
+                        @elseif($parameter->reference_ranges && count($parameter->reference_ranges) > 0)
                             <div style="font-size: 10px; line-height: 1.4;">
                                 @foreach($parameter->reference_ranges as $refRange)
                                     <div style="margin-bottom: 2px;">
