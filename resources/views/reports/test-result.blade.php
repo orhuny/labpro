@@ -273,9 +273,7 @@
                     <td>{{ $parameter->unit ?? __('common.n_a') }}</td>
                     <td>
                         @if(!empty($parameter->reference_html))
-                            <div style="font-size: 10px; line-height: 1.4;">
-                                {!! $parameter->reference_html !!}
-                            </div>
+                            {{-- Referans tabloyu altta ayrıca göstereceğiz, kolonu boş bırak --}}
                         @elseif($parameter->reference_ranges && count($parameter->reference_ranges) > 0)
                             <div style="font-size: 10px; line-height: 1.4;">
                                 @foreach($parameter->reference_ranges as $refRange)
@@ -360,6 +358,15 @@
                         @endif
                     </td>
                 </tr>
+                @if(!empty($parameter->reference_html))
+                <tr>
+                    <td colspan="5" style="font-size: 10px; line-height: 1.4; text-align: center; padding-top: 4px;">
+                        <div style="display: inline-block; text-align: left;">
+                            {!! $parameter->reference_html !!}
+                        </div>
+                    </td>
+                </tr>
+                @endif
                 @if($value->notes)
                 <tr>
                     <td colspan="5" style="font-size: 10px; font-style: italic; color: #666;">
