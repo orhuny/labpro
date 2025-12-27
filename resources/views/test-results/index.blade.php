@@ -238,6 +238,13 @@
                     @endforelse
                 </div>
             </div>
+            
+            <!-- Pagination -->
+            @if(isset($results) && $results->hasPages())
+            <div class="mt-6">
+                {{ $results->links() }}
+            </div>
+            @endif
         </div>
     </div>
 </div>

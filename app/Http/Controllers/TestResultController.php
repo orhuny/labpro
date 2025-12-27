@@ -35,14 +35,14 @@ class TestResultController extends Controller
             });
         }
 
-        $results = $query->orderBy('created_at', 'desc')->get();
+        $results = $query->orderBy('created_at', 'desc')->paginate(15);
         
         // Group results by order_group_id
         $groupedResults = $results->groupBy(function ($result) {
             return $result->order_group_id ?? 'single_' . $result->id;
         });
 
-        return view('test-results.index', compact('groupedResults'));
+        return view('test-results.index', compact('groupedResults', 'results'));
     }
 
     public function create(Request $request)
